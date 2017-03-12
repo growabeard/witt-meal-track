@@ -21,11 +21,11 @@ public class MealTrackerApplication {
       return new ResponseEntity<Foods>(new Foods(), HttpStatus.OK);
     }
 	
-	@RequestMapping("/")
-    @ResponseBody
-    String home() {
-		return "index.html";
-	}
+//	@RequestMapping("/")
+//    @ResponseBody
+//    String home() {
+//		return "index.html";
+//	}
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MealTrackerApplication.class, args);
