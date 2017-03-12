@@ -9,8 +9,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class MealTrackerApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
 
 }

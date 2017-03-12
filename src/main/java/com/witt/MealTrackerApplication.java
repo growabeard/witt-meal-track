@@ -24,7 +24,7 @@ public class MealTrackerApplication {
 	@RequestMapping("/")
     @ResponseBody
     String home() {
-		return "static/index.html";
+		return "index.html";
 	}
 	
 	public static void main(String[] args) {
