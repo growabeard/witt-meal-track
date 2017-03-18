@@ -179,7 +179,712 @@
 
   <script>Polymer({is:"paper-checkbox",behaviors:[Polymer.PaperCheckedElementBehavior],hostAttributes:{role:"checkbox","aria-checked":!1,tabindex:0},properties:{ariaActiveAttribute:{type:String,value:"aria-checked"}},attached:function(){if("-1px"===this.getComputedStyleValue("--calculated-paper-checkbox-ink-size").trim()){var e=parseFloat(this.getComputedStyleValue("--calculated-paper-checkbox-size").trim()),t=Math.floor(8/3*e);t%2!=e%2&&t++,this.customStyle["--paper-checkbox-ink-size"]=t+"px",this.updateStyles()}},_computeCheckboxClass:function(e,t){var a="";return e&&(a+="checked "),t&&(a+="invalid"),a},_computeCheckmarkClass:function(e){return e?"":"hidden"},_createRipple:function(){return this._rippleContainer=this.$.checkboxContainer,Polymer.PaperInkyFocusBehaviorImpl._createRipple.call(this)}});</script>
 </dom-module>
-<dom-module id="food-category" assetpath="./">
+<script>Polymer.PaperButtonBehaviorImpl={properties:{elevation:{type:Number,reflectToAttribute:!0,readOnly:!0}},observers:["_calculateElevation(focused, disabled, active, pressed, receivedFocusFromKeyboard)","_computeKeyboardClass(receivedFocusFromKeyboard)"],hostAttributes:{role:"button",tabindex:"0",animated:!0},_calculateElevation:function(){var e=1;this.disabled?e=0:this.active||this.pressed?e=4:this.receivedFocusFromKeyboard&&(e=3),this._setElevation(e)},_computeKeyboardClass:function(e){this.toggleClass("keyboard-focus",e)},_spaceKeyDownHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyDownHandler.call(this,e),this.hasRipple()&&this.getRipple().ripples.length<1&&this._ripple.uiDownAction()},_spaceKeyUpHandler:function(e){Polymer.IronButtonStateImpl._spaceKeyUpHandler.call(this,e),this.hasRipple()&&this._ripple.uiUpAction()}},Polymer.PaperButtonBehavior=[Polymer.IronButtonState,Polymer.IronControlState,Polymer.PaperRippleBehavior,Polymer.PaperButtonBehaviorImpl];</script><style is="custom-style">
+
+  :root {
+
+    --shadow-transition: {
+      transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    };
+
+    --shadow-none: {
+      box-shadow: none;
+    };
+
+    /* from http://codepen.io/shyndman/pen/c5394ddf2e8b2a5c9185904b57421cdb */
+
+    --shadow-elevation-2dp: {
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    };
+
+    --shadow-elevation-3dp: {
+      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 8px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 3px -2px rgba(0, 0, 0, 0.4);
+    };
+
+    --shadow-elevation-4dp: {
+      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    };
+
+    --shadow-elevation-6dp: {
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+    };
+
+    --shadow-elevation-8dp: {
+      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+    };
+
+    --shadow-elevation-12dp: {
+      box-shadow: 0 12px 16px 1px rgba(0, 0, 0, 0.14),
+                  0 4px 22px 3px rgba(0, 0, 0, 0.12),
+                  0 6px 7px -4px rgba(0, 0, 0, 0.4);
+    };
+
+    --shadow-elevation-16dp: {
+      box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+    };
+
+    --shadow-elevation-24dp: {
+      box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+                  0 9px 46px 8px rgba(0, 0, 0, 0.12),
+                  0 11px 15px -7px rgba(0, 0, 0, 0.4);
+    };
+  }
+
+</style><dom-module id="paper-material-shared-styles" assetpath="../bower_components/paper-material/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+
+      :host([elevation="1"]) {
+        @apply(--shadow-elevation-2dp);
+      }
+
+      :host([elevation="2"]) {
+        @apply(--shadow-elevation-4dp);
+      }
+
+      :host([elevation="3"]) {
+        @apply(--shadow-elevation-6dp);
+      }
+
+      :host([elevation="4"]) {
+        @apply(--shadow-elevation-8dp);
+      }
+
+      :host([elevation="5"]) {
+        @apply(--shadow-elevation-16dp);
+      }
+    </style>
+  </template>
+</dom-module>
+<dom-module id="paper-button" assetpath="../bower_components/paper-button/">
+  <template strip-whitespace="">
+    <style include="paper-material-shared-styles">
+      :host {
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        box-sizing: border-box;
+        min-width: 5.14em;
+        margin: 0 0.29em;
+        background: transparent;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+        font: inherit;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+        padding: 0.7em 0.57em;
+
+        @apply(--paper-font-common-base);
+        @apply(--paper-button);
+      }
+
+      :host([hidden]) {
+        display: none !important;
+      }
+
+      :host([raised].keyboard-focus) {
+        font-weight: bold;
+        @apply(--paper-button-raised-keyboard-focus);
+      }
+
+      :host(:not([raised]).keyboard-focus) {
+        font-weight: bold;
+        @apply(--paper-button-flat-keyboard-focus);
+      }
+
+      :host([disabled]) {
+        background: #eaeaea;
+        color: #a8a8a8;
+        cursor: auto;
+        pointer-events: none;
+
+        @apply(--paper-button-disabled);
+      }
+
+      :host([animated]) {
+        @apply(--shadow-transition);
+      }
+
+      paper-ripple {
+        color: var(--paper-button-ink-color);
+      }
+    </style>
+
+    <content></content>
+  </template>
+
+  <script>Polymer({is:"paper-button",behaviors:[Polymer.PaperButtonBehavior],properties:{raised:{type:Boolean,reflectToAttribute:!0,value:!1,observer:"_calculateElevation"}},_calculateElevation:function(){this.raised?Polymer.PaperButtonBehaviorImpl._calculateElevation.apply(this):this._setElevation(0)}});</script>
+</dom-module>
+<dom-module id="iron-image" assetpath="../bower_components/iron-image/">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+      }
+
+      #sizedImgDiv {
+        @apply(--layout-fit);
+
+        display: none;
+      }
+
+      #img {
+        display: block;
+        width: var(--iron-image-width, auto);
+        height: var(--iron-image-height, auto);
+      }
+
+      :host([sizing]) #sizedImgDiv {
+        display: block;
+      }
+
+      :host([sizing]) #img {
+        display: none;
+      }
+
+      #placeholder {
+        @apply(--layout-fit);
+
+        background-color: inherit;
+        opacity: 1;
+
+        @apply(--iron-image-placeholder);
+      }
+
+      #placeholder.faded-out {
+        transition: opacity 0.5s linear;
+        opacity: 0;
+      }
+    </style>
+
+    <div id="sizedImgDiv" role="img" hidden$="[[_computeImgDivHidden(sizing)]]" aria-hidden$="[[_computeImgDivARIAHidden(alt)]]" aria-label$="[[_computeImgDivARIALabel(alt, src)]]"></div>
+    <img id="img" alt$="[[alt]]" hidden$="[[_computeImgHidden(sizing)]]">
+    <div id="placeholder" hidden$="[[_computePlaceholderHidden(preload, fade, loading, loaded)]]" class$="[[_computePlaceholderClassName(preload, fade, loading, loaded)]]"></div>
+  </template>
+
+  <script>Polymer({is:"iron-image",properties:{src:{observer:"_srcChanged",type:String,value:""},alt:{type:String,value:null},preventLoad:{type:Boolean,value:!1,observer:"_preventLoadChanged"},sizing:{type:String,value:null,reflectToAttribute:!0},position:{type:String,value:"center"},preload:{type:Boolean,value:!1},placeholder:{type:String,value:null,observer:"_placeholderChanged"},fade:{type:Boolean,value:!1},loaded:{notify:!0,readOnly:!0,type:Boolean,value:!1},loading:{notify:!0,readOnly:!0,type:Boolean,value:!1},error:{notify:!0,readOnly:!0,type:Boolean,value:!1},width:{observer:"_widthChanged",type:Number,value:null},height:{observer:"_heightChanged",type:Number,value:null}},observers:["_transformChanged(sizing, position)"],ready:function(){var e=this.$.img;e.onload=function(){this.$.img.src===this._resolveSrc(this.src)&&(this._setLoading(!1),this._setLoaded(!0),this._setError(!1))}.bind(this),e.onerror=function(){this.$.img.src===this._resolveSrc(this.src)&&(this._reset(),this._setLoading(!1),this._setLoaded(!1),this._setError(!0))}.bind(this),this._resolvedSrc=""},_load:function(e){e?this.$.img.src=e:this.$.img.removeAttribute("src"),this.$.sizedImgDiv.style.backgroundImage=e?'url("'+e+'")':"",this._setLoading(!!e),this._setLoaded(!1),this._setError(!1)},_reset:function(){this.$.img.removeAttribute("src"),this.$.sizedImgDiv.style.backgroundImage="",this._setLoading(!1),this._setLoaded(!1),this._setError(!1)},_computePlaceholderHidden:function(){return!this.preload||!this.fade&&!this.loading&&this.loaded},_computePlaceholderClassName:function(){return this.preload&&this.fade&&!this.loading&&this.loaded?"faded-out":""},_computeImgDivHidden:function(){return!this.sizing},_computeImgDivARIAHidden:function(){return""===this.alt?"true":void 0},_computeImgDivARIALabel:function(){if(null!==this.alt)return this.alt;if(""===this.src)return"";var e=new URL(this._resolveSrc(this.src)).pathname.split("/");return e[e.length-1]},_computeImgHidden:function(){return!!this.sizing},_widthChanged:function(){this.style.width=isNaN(this.width)?this.width:this.width+"px"},_heightChanged:function(){this.style.height=isNaN(this.height)?this.height:this.height+"px"},_preventLoadChanged:function(){this.preventLoad||this.loaded||(this._reset(),this._load(this.src))},_srcChanged:function(e,t){var i=this._resolveSrc(e);i!==this._resolvedSrc&&(this._resolvedSrc=i,this._reset(),this.preventLoad||this._load(e))},_placeholderChanged:function(){this.$.placeholder.style.backgroundImage=this.placeholder?'url("'+this.placeholder+'")':""},_transformChanged:function(){var e=this.$.sizedImgDiv.style,t=this.$.placeholder.style;e.backgroundSize=t.backgroundSize=this.sizing,e.backgroundPosition=t.backgroundPosition=this.sizing?this.position:"",e.backgroundRepeat=t.backgroundRepeat=this.sizing?"no-repeat":""},_resolveSrc:function(e){var t=this.ownerDocument.baseURI;return new URL(Polymer.ResolveUrl.resolveUrl(e,t),t).href}});</script>
+</dom-module>
+<dom-module id="paper-material" assetpath="../bower_components/paper-material/">
+  <template>
+    <style include="paper-material-shared-styles"></style>
+    <style>
+      :host([animated]) {
+        @apply(--shadow-transition);
+      }
+    </style>
+
+    <content></content>
+  </template>
+</dom-module>
+<script>Polymer({is:"paper-material",properties:{elevation:{type:Number,reflectToAttribute:!0,value:1},animated:{type:Boolean,reflectToAttribute:!0,value:!1}}});</script>
+<dom-module id="paper-card" assetpath="../bower_components/paper-card/">
+  <template>
+    <style include="paper-material">
+      :host {
+        display: inline-block;
+        position: relative;
+        box-sizing: border-box;
+        background-color: var(--paper-card-background-color, --primary-background-color);
+        border-radius: 2px;
+
+        @apply(--paper-font-common-base);
+        @apply(--paper-card);
+      }
+
+      /* IE 10 support for HTML5 hidden attr */
+      [hidden] {
+        display: none !important;
+      }
+
+      .header {
+        position: relative;
+        border-top-left-radius: inherit;
+        border-top-right-radius: inherit;
+        overflow: hidden;
+
+        @apply(--paper-card-header);
+      }
+
+      .header iron-image {
+        display: block;
+        width: 100%;
+        --iron-image-width: 100%;
+        pointer-events: none;
+
+        @apply(--paper-card-header-image);
+      }
+
+      .header .title-text {
+        padding: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: var(--paper-card-header-color, #000);
+
+        @apply(--paper-card-header-text);
+      }
+
+      .header .title-text.over-image {
+        position: absolute;
+        bottom: 0px;
+
+        @apply(--paper-card-header-image-text);
+      }
+
+      :host ::content .card-content {
+        padding: 16px;
+        position:relative;
+
+        @apply(--paper-card-content);
+      }
+
+      :host ::content .card-actions {
+        border-top: 1px solid #e8e8e8;
+        padding: 5px 16px;
+        position:relative;
+
+        @apply(--paper-card-actions);
+      }
+    </style>
+
+    <div class="header">
+      <iron-image hidden$="[[!image]]" aria-hidden$="[[_isHidden(image)]]" src="[[image]]" alt="[[alt]]" placeholder="[[placeholderImage]]" preload="[[preloadImage]]" fade="[[fadeImage]]"></iron-image>
+      <div hidden$="[[!heading]]" class$="title-text [[_computeHeadingClass(image)]]">[[heading]]</div>
+    </div>
+
+    <content></content>
+  </template>
+
+  <script>Polymer({is:"paper-card",properties:{heading:{type:String,value:"",observer:"_headingChanged"},image:{type:String,value:""},alt:{type:String},preloadImage:{type:Boolean,value:!1},fadeImage:{type:Boolean,value:!1},placeholderImage:{type:String,value:null},elevation:{type:Number,value:1,reflectToAttribute:!0},animatedShadow:{type:Boolean,value:!1},animated:{type:Boolean,reflectToAttribute:!0,readOnly:!0,computed:"_computeAnimated(animatedShadow)"}},_isHidden:function(e){return e?"false":"true"},_headingChanged:function(e){this.getAttribute("aria-label");this.setAttribute("aria-label",e)},_computeHeadingClass:function(e){return e?" over-image":""},_computeAnimated:function(e){return e}});</script>
+</dom-module>
+<dom-module id="iron-flex" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .layout.horizontal,
+      .layout.vertical {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      .layout.inline {
+        display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+      }
+
+      .layout.horizontal {
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+      }
+
+      .layout.vertical {
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
+
+      .layout.wrap {
+        -ms-flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+      }
+
+      .layout.no-wrap {
+        -ms-flex-wrap: nowrap;
+        -webkit-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+      }
+
+      .layout.center,
+      .layout.center-center {
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .layout.center-justified,
+      .layout.center-center {
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+
+      .flex {
+        -ms-flex: 1 1 0.000000001px;
+        -webkit-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0.000000001px;
+        flex-basis: 0.000000001px;
+      }
+
+      .flex-auto {
+        -ms-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+        flex: 1 1 auto;
+      }
+
+      .flex-none {
+        -ms-flex: none;
+        -webkit-flex: none;
+        flex: none;
+      }
+    </style>
+  </template>
+</dom-module>
+
+
+<dom-module id="iron-flex-reverse" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .layout.horizontal-reverse,
+      .layout.vertical-reverse {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      .layout.horizontal-reverse {
+        -ms-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+      }
+
+      .layout.vertical-reverse {
+        -ms-flex-direction: column-reverse;
+        -webkit-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+      }
+
+      .layout.wrap-reverse {
+        -ms-flex-wrap: wrap-reverse;
+        -webkit-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+      }
+    </style>
+  </template>
+</dom-module>
+
+
+<dom-module id="iron-flex-alignment" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      /**
+       * Alignment in cross axis.
+       */
+      .layout.start {
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+      }
+
+      .layout.center,
+      .layout.center-center {
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .layout.end {
+        -ms-flex-align: end;
+        -webkit-align-items: flex-end;
+        align-items: flex-end;
+      }
+
+      .layout.baseline {
+        -ms-flex-align: baseline;
+        -webkit-align-items: baseline;
+        align-items: baseline;
+      }
+
+      /**
+       * Alignment in main axis.
+       */
+      .layout.start-justified {
+        -ms-flex-pack: start;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+      }
+
+      .layout.center-justified,
+      .layout.center-center {
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
+
+      .layout.end-justified {
+        -ms-flex-pack: end;
+        -webkit-justify-content: flex-end;
+        justify-content: flex-end;
+      }
+
+      .layout.around-justified {
+        -ms-flex-pack: distribute;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+      }
+
+      .layout.justified {
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+      }
+
+      /**
+       * Self alignment.
+       */
+      .self-start {
+        -ms-align-self: flex-start;
+        -webkit-align-self: flex-start;
+        align-self: flex-start;
+      }
+
+      .self-center {
+        -ms-align-self: center;
+        -webkit-align-self: center;
+        align-self: center;
+      }
+
+      .self-end {
+        -ms-align-self: flex-end;
+        -webkit-align-self: flex-end;
+        align-self: flex-end;
+      }
+
+      .self-stretch {
+        -ms-align-self: stretch;
+        -webkit-align-self: stretch;
+        align-self: stretch;
+      }
+
+      .self-baseline {
+        -ms-align-self: baseline;
+        -webkit-align-self: baseline;
+        align-self: baseline;
+      }
+
+      /**
+       * multi-line alignment in main axis.
+       */
+      .layout.start-aligned {
+        -ms-flex-line-pack: start;  /* IE10 */
+        -ms-align-content: flex-start;
+        -webkit-align-content: flex-start;
+        align-content: flex-start;
+      }
+
+      .layout.end-aligned {
+        -ms-flex-line-pack: end;  /* IE10 */
+        -ms-align-content: flex-end;
+        -webkit-align-content: flex-end;
+        align-content: flex-end;
+      }
+
+      .layout.center-aligned {
+        -ms-flex-line-pack: center;  /* IE10 */
+        -ms-align-content: center;
+        -webkit-align-content: center;
+        align-content: center;
+      }
+
+      .layout.between-aligned {
+        -ms-flex-line-pack: justify;  /* IE10 */
+        -ms-align-content: space-between;
+        -webkit-align-content: space-between;
+        align-content: space-between;
+      }
+
+      .layout.around-aligned {
+        -ms-flex-line-pack: distribute;  /* IE10 */
+        -ms-align-content: space-around;
+        -webkit-align-content: space-around;
+        align-content: space-around;
+      }
+    </style>
+  </template>
+</dom-module>
+
+<dom-module id="iron-flex-factors" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .flex,
+      .flex-1 {
+        -ms-flex: 1 1 0.000000001px;
+        -webkit-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0.000000001px;
+        flex-basis: 0.000000001px;
+      }
+
+      .flex-2 {
+        -ms-flex: 2;
+        -webkit-flex: 2;
+        flex: 2;
+      }
+
+      .flex-3 {
+        -ms-flex: 3;
+        -webkit-flex: 3;
+        flex: 3;
+      }
+
+      .flex-4 {
+        -ms-flex: 4;
+        -webkit-flex: 4;
+        flex: 4;
+      }
+
+      .flex-5 {
+        -ms-flex: 5;
+        -webkit-flex: 5;
+        flex: 5;
+      }
+
+      .flex-6 {
+        -ms-flex: 6;
+        -webkit-flex: 6;
+        flex: 6;
+      }
+
+      .flex-7 {
+        -ms-flex: 7;
+        -webkit-flex: 7;
+        flex: 7;
+      }
+
+      .flex-8 {
+        -ms-flex: 8;
+        -webkit-flex: 8;
+        flex: 8;
+      }
+
+      .flex-9 {
+        -ms-flex: 9;
+        -webkit-flex: 9;
+        flex: 9;
+      }
+
+      .flex-10 {
+        -ms-flex: 10;
+        -webkit-flex: 10;
+        flex: 10;
+      }
+
+      .flex-11 {
+        -ms-flex: 11;
+        -webkit-flex: 11;
+        flex: 11;
+      }
+
+      .flex-12 {
+        -ms-flex: 12;
+        -webkit-flex: 12;
+        flex: 12;
+      }
+    </style>
+  </template>
+</dom-module>
+
+
+<dom-module id="iron-positioning" assetpath="../bower_components/iron-flex-layout/">
+  <template>
+    <style>
+      .block {
+        display: block;
+      }
+
+      /* IE 10 support for HTML5 hidden attr */
+      [hidden] {
+        display: none !important;
+      }
+
+      .invisible {
+        visibility: hidden !important;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .fit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      body.fullbleed {
+        margin: 0;
+        height: 100vh;
+      }
+
+      .scroll {
+        -webkit-overflow-scrolling: touch;
+        overflow: auto;
+      }
+
+      /* fixed position */
+      .fixed-bottom,
+      .fixed-left,
+      .fixed-right,
+      .fixed-top {
+        position: fixed;
+      }
+
+      .fixed-top {
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .fixed-right {
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .fixed-bottom {
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .fixed-left {
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+    </style>
+  </template>
+</dom-module>
+<script>!function(){Polymer.Gestures.register({name:"vaadin-contextmenu",deps:["touchstart","touchmove","tap","contextmenu"],flow:{start:["touchstart","contextmenu"],end:["tap","contextmenu"]},emits:["vaadin-contextmenu"],info:{sourceEvent:null,_ios:/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream},reset:function(){this.info.sourceEvent=null,this.info.fired=!1,this.info.touchJob&&this.info.touchJob.stop(),this.info.touchJob=null,this.info.touchStartCoords=null},touchstart:function(t){this.info.sourceEvent=t,this.info.touchStartCoords={x:t.changedTouches[0].clientX,y:t.changedTouches[0].clientY},this.info.touchJob=Polymer.Debounce(this.info.touchJob,function(){var o=Polymer.Gestures.findOriginalTarget(t),n=t.changedTouches[0];this.info._ios&&!t.shiftKey&&this.fire(o,n.clientX,n.clientY)}.bind(this),500)},touchmove:function(t){var o=this.info.touchStartCoords;(Math.abs(o.x-t.changedTouches[0].clientX)>15||Math.abs(o.y-t.changedTouches[0].clientY)>15)&&this.info.touchJob.stop()},contextmenu:function(t){t.shiftKey||(this.info.sourceEvent=t,this.fire(t.target,t.clientX,t.clientY))},tap:function(t){this.info.touchJob&&this.info.touchJob.stop(),this.info.fired&&(t.preventDefault(),t.stopPropagation())},fire:function(t,o,n){Polymer.Gestures.fire(t,"vaadin-contextmenu",{x:o,y:n,sourceEvent:this.info.sourceEvent}),this.info.fired=!0}})}();</script><dom-module id="food-category" assetpath="./">
   <template>
     <style include="shared-styles">
       :host {
@@ -187,17 +892,31 @@
 
         padding: 10px;
       }
+
+      .top-left {
+        float: right;
+        font-size: 15px;
+        vertical-align: top;
+        margin-left: 15px;
+      }
+
+      paper-card.incomplete {
+        --paper-card-header-color: salmon;
+      }
+
+      paper-card.complete {
+        --paper-card-header-color: mediumseagreen;
+      }
     </style>
 
-    <div class="card">
-      <h1>{{display}}</h1>
-      <template is="dom-repeat" items="{{expected}}">
-        <paper-checkbox checked="{{item.checked}}"></paper-checkbox>
+    <paper-card heading="{{display}}  {{total}}/{{expected}}" class="incomplete">
+      <template is="dom-repeat" items="{{options}}" observe="count" class="white">
+        <paper-button on-tap="handleOptionTap" on-vaadin-contextmenu="handleOptionDoubleTap">{{item.text}}</paper-button><span>{{item.count}}</span>
       </template>
-    </div>
+    </paper-card>
   </template>
 
-  <script>Polymer({is:"food-category",properties:{display:{type:String},expected:{type:String}}});</script>
+  <script>Polymer({is:"food-category",properties:{display:{type:String},expected:{type:Object},options:{type:String,notify:!0},total:{type:Number,value:0}},handleOptionTap:function(t){t.model.set("item.count",t.model.item.count+1),this.total++,this._updateTitleStyle()},handleOptionDoubleTap:function(t){return!(t.model.item.count<=0)&&(t.model.set("item.count",t.model.item.count-1),this.total--,this._updateTitleStyle(),!1)},_updateTitleStyle:function(){this.total===this.expected?this.$$("paper-card").className="complete":this.total<this.expected&&(this.$$("paper-card").className="incomplete"),Polymer.updateStyles()},checkTheBox:function(t){this.checked=!0}});</script>
 </dom-module>
 </div><dom-module id="my-view1">
   <template>
@@ -209,11 +928,11 @@
       }
     </style>
 
-    <template is="dom-repeat" items="{{foods}}">
-      <food-category display="{{item.display}}" expected="{{item.expected}}"></food-category>
+    <template is="dom-repeat" items="{{foods}}" observe="options">
+      <food-category display="{{item.display}}" ,="" total="{{item.total}}" expected="{{item.expected}}" options="{{item.options}}"></food-category>
     </template>
   </template>
 
-  <script>Polymer({is:"my-view1",properties:{foods:{type:Object}},ready:function(){}});</script>
+  <script>Polymer({is:"my-view1",properties:{foods:{type:Object,notify:!0}},ready:function(){}});</script>
 </dom-module>
 </body></html>

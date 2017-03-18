@@ -1,5 +1,9 @@
 <html><head><link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/vaadin-context-menu/vaadin-contextmenu-event.html">
 <link rel="import" href="shared-styles.html">
 
 </head><body><dom-module id="food-category">
@@ -10,16 +14,30 @@
 
         padding: 10px;
       }
+
+      .top-left {
+        float: right;
+        font-size: 15px;
+        vertical-align: top;
+        margin-left: 15px;
+      }
+
+      paper-card.incomplete {
+        --paper-card-header-color: salmon;
+      }
+
+      paper-card.complete {
+        --paper-card-header-color: mediumseagreen;
+      }
     </style>
 
-    <div class="card">
-      <h1>{{display}}</h1>
-      <template is="dom-repeat" items="{{expected}}">
-        <paper-checkbox checked="{{item.checked}}"></paper-checkbox>
+    <paper-card heading="{{display}}  {{total}}/{{expected}}" class="incomplete">
+      <template is="dom-repeat" items="{{options}}" observe="count" class="white">
+        <paper-button on-tap="handleOptionTap" on-vaadin-contextmenu="handleOptionDoubleTap">{{item.text}}</paper-button><span>{{item.count}}</span>
       </template>
-    </div>
+    </paper-card>
   </template>
 
-  <script>Polymer({is:"food-category",properties:{display:{type:String},expected:{type:String}}});</script>
+  <script>Polymer({is:"food-category",properties:{display:{type:String},expected:{type:Object},options:{type:String,notify:!0},total:{type:Number,value:0}},handleOptionTap:function(t){t.model.set("item.count",t.model.item.count+1),this.total++,this._updateTitleStyle()},handleOptionDoubleTap:function(t){return!(t.model.item.count<=0)&&(t.model.set("item.count",t.model.item.count-1),this.total--,this._updateTitleStyle(),!1)},_updateTitleStyle:function(){this.total===this.expected?this.$$("paper-card").className="complete":this.total<this.expected&&(this.$$("paper-card").className="incomplete"),Polymer.updateStyles()},checkTheBox:function(t){this.checked=!0}});</script>
 </dom-module>
 </body></html>
