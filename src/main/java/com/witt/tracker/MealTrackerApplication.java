@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.witt.tracker.delegate.FoodsDelegate;
-import com.witt.tracker.entities.Categories;
-import com.witt.tracker.repositories.CategoriesRepository;
-import com.witt.tracker.repositories.FoodsRepository;
 import com.witt.tracker.response.ReturnCategory;
 
 @SpringBootApplication

@@ -3,7 +3,6 @@ package com.witt.tracker.delegate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.IterableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
