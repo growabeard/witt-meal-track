@@ -10,7 +10,7 @@ public class Foods {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	
 	@Column
 	private String text;
@@ -18,11 +18,11 @@ public class Foods {
 	@Column
 	private int[] categories;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

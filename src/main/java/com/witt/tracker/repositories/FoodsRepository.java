@@ -1,11 +1,12 @@
 package com.witt.tracker.repositories;
 
 import com.witt.tracker.entities.Foods;
+import org.springframework.data.repository.CrudRepository;
 
-public class FoodsRepository extends CrudRepository<Foods, Long> {
+public interface FoodsRepository extends CrudRepository<Foods, Integer> {
 	
-		Foods findById(int id);
+	Foods findById(Integer id);
 
-		Iterable<Foods> findAll();
+	Iterable<Foods> findAll();
 
 }

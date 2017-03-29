@@ -1,11 +1,12 @@
 package com.witt.tracker.repositories;
 
 import com.witt.tracker.entities.Categories;
+import org.springframework.data.repository.CrudRepository;
 
-public class CategoriesRepository extends CrudRepository<Categories, Long> {
+public interface CategoriesRepository extends CrudRepository<Categories, Integer> {
 	
-		Categories findById(int id);
+	Categories findOne(Integer id);
 
-		Iterable<Categories> findAll();
+	Iterable<Categories> findAll();
 
 }
