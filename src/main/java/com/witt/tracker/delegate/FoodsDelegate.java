@@ -26,7 +26,7 @@ public class FoodsDelegate {
 	public ReturnCategory[] getAll() {
     	Iterable<Categories> categories = categoriesRepo.findAll();
 		List<ReturnCategory> returnCategories = new ArrayList<ReturnCategory>();
-    	Iterable<Foods> foods = foodsRepo.findAll();
+    	//Iterable<Foods> foods = foodsRepo.findAll();
     	
     	for (Categories category : categories) {
     		ReturnCategory returnCategory = new ReturnCategory();
@@ -34,7 +34,8 @@ public class FoodsDelegate {
     		returnCategory.setExpected(category.getExpected());
     		returnCategory.setId(category.getId());
     		returnCategory.setTotal(0);
-    		returnCategory.setOptions(getOptions(category.getId(), foods));
+    		returnCategory.setOptions(new Option[]{new Option()});
+//    		returnCategory.setOptions(getOptions(category.getId(), foods));
     		returnCategories.add(returnCategory);
     	}
     	
