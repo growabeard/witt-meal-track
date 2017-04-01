@@ -48,7 +48,6 @@ public class FoodsDelegate {
 		
 		for (Foods food : foods) {
 			for (Integer catId : food.getCategories()) {
-				System.out.println("foods category " + catId + " and category looking at " + categoryId);
 				if (catId.compareTo(categoryId) == 0) {
 					Option option = new Option();
 					option.setCount(0);
