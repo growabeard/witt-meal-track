@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 
 
-@Entity
+@Entity (name = "USER")
 
 public class User {
 

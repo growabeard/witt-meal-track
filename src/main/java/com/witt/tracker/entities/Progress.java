@@ -16,7 +16,7 @@ import javax.persistence.Id;
 
 
 
-@Entity
+@Entity (name = "PROGRESS")
 
 public class Progress {
 

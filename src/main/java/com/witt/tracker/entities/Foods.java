@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 
 
-@Entity
+@Entity (name = "FOODS")
 
 public class Foods {
 
