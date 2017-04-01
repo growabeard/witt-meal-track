@@ -3,11 +3,13 @@ package com.witt.tracker.entities;
 
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
 
 
 @Entity (name = "FOODS")
@@ -22,7 +24,8 @@ public class Foods implements Serializable {
 	@Column (name = "TEXT")
 	private String text;
 
-	@Column (name = "CATEGORIES")
+	@Column(name = "CATEGORIES", columnDefinition = "integer[]")
+    @Type(type = "com.witt.tracker.usertypes.IntArrayUserType")
 	private int[] categories;
 
 	public Integer getId() {

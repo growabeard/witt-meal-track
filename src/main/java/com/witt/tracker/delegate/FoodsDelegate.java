@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.witt.tracker.entities.Categories;
+import com.witt.tracker.entities.Category;
 import com.witt.tracker.entities.Foods;
 import com.witt.tracker.repositories.CategoriesRepository;
 import com.witt.tracker.repositories.FoodsRepository;
@@ -24,18 +24,18 @@ public class FoodsDelegate {
 	
 	
 	public ReturnCategory[] getAll() {
-    	Iterable<Categories> categories = categoriesRepo.findAll();
+    	Iterable<Category> categories = categoriesRepo.findAll();
 		List<ReturnCategory> returnCategories = new ArrayList<ReturnCategory>();
-    	//Iterable<Foods> foods = foodsRepo.findAll();
+    	Iterable<Foods> foods = foodsRepo.findAll();
     	
-    	for (Categories category : categories) {
+    	for (Category category : categories) {
     		ReturnCategory returnCategory = new ReturnCategory();
     		returnCategory.setDisplay(category.getName());
     		returnCategory.setExpected(category.getExpected());
     		returnCategory.setId(category.getId());
     		returnCategory.setTotal(0);
-    		returnCategory.setOptions(new Option[]{new Option()});
-//    		returnCategory.setOptions(getOptions(category.getId(), foods));
+//    		returnCategory.setOptions(new Option[]{new Option()});
+    		returnCategory.setOptions(getOptions(category.getId(), foods));
     		returnCategories.add(returnCategory);
     	}
     	
