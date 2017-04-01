@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 
 
-@Entity (name = "CATEGORIES")
+@Entity (name = "`CATEGORIES`")
 
 public class Categories {
 
