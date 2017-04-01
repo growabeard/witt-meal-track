@@ -47,7 +47,7 @@ public class FoodsDelegate {
 		List<Option> options = new ArrayList<Option>();
 		
 		for (Foods food : foods) {
-			for (int catId : food.getCategories()) {
+			for (Integer catId : food.getCategories()) {
 				if (catId == categoryId) {
 					Option option = new Option();
 					option.setCount(0);

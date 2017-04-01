@@ -26,7 +26,7 @@ public class Foods implements Serializable {
 
 	@Column(name = "CATEGORIES", columnDefinition = "integer[]")
     @Type(type = "com.witt.tracker.usertypes.IntArrayUserType")
-	private int[] categories;
+	private Integer[] categories;
 
 	public Integer getId() {
 		return id;
@@ -44,11 +44,11 @@ public class Foods implements Serializable {
 		this.text = text;
 	}
 
-	public int[] getCategories() {
+	public Integer[] getCategories() {
 		return categories;
 	}
 
-	public void setCategories(int[] categories) {
+	public void setCategories(Integer[] categories) {
 		this.categories = categories;
 	}
 
