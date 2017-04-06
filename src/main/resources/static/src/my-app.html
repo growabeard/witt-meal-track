@@ -13,6 +13,7 @@
 
 
 
+
 </head><body><div hidden="" by-vulcanize=""><script>!function(){function e(){document.body.removeAttribute("unresolved")}window.WebComponents?addEventListener("WebComponentsReady",e):"interactive"===document.readyState||"complete"===document.readyState?e():addEventListener("DOMContentLoaded",e)}(),window.Polymer={Settings:function(){var e=window.Polymer||{};if(!e.noUrlSettings)for(var t,r=location.search.slice(1).split("&"),i=0;i<r.length&&(t=r[i]);i++)t=t.split("="),t[0]&&(e[t[0]]=t[1]||!0);return e.wantShadow="shadow"===e.dom,e.hasShadow=Boolean(Element.prototype.createShadowRoot),e.nativeShadow=e.hasShadow&&!window.ShadowDOMPolyfill,e.useShadow=e.wantShadow&&e.hasShadow,e.hasNativeImports=Boolean("import"in document.createElement("link")),e.useNativeImports=e.hasNativeImports,e.useNativeCustomElements=!window.CustomElements||window.CustomElements.useNative,e.useNativeShadow=e.useShadow&&e.nativeShadow,e.usePolyfillProto=!e.useNativeCustomElements&&!Object.__proto__,e.hasNativeCSSProperties=!navigator.userAgent.match("AppleWebKit/601")&&window.CSS&&CSS.supports&&CSS.supports("box-shadow","0 0 0 var(--foo)"),e.useNativeCSSProperties=e.hasNativeCSSProperties&&e.lazyRegister&&e.useNativeCSSProperties,e.isIE=navigator.userAgent.match("Trident"),e}()},function(){var e=window.Polymer;window.Polymer=function(e){"function"==typeof e&&(e=e.prototype),e||(e={}),e=t(e);var r=e===e.constructor.prototype?e.constructor:null,i={prototype:e};e.extends&&(i.extends=e.extends),Polymer.telemetry._registrate(e);var o=document.registerElement(e.is,i);return r||o};var t=function(e){var t=Polymer.Base;return e.extends&&(t=Polymer.Base._getExtendedPrototype(e.extends)),e=Polymer.Base.chainObject(e,t),e.registerCallback(),e};if(e)for(var r in e)Polymer[r]=e[r];Polymer.Class=function(e){return e.factoryImpl||(e.factoryImpl=function(){}),t(e).constructor}}(),Polymer.telemetry={registrations:[],_regLog:function(e){console.log("["+e.is+"]: registered")},_registrate:function(e){this.registrations.push(e),Polymer.log&&this._regLog(e)},dumpRegistrations:function(){this.registrations.forEach(this._regLog)}},Object.defineProperty(window,"currentImport",{enumerable:!0,configurable:!0,get:function(){return(document._currentScript||document.currentScript||{}).ownerDocument}}),Polymer.RenderStatus={_ready:!1,_callbacks:[],whenReady:function(e){this._ready?e():this._callbacks.push(e)},_makeReady:function(){this._ready=!0;for(var e=0;e<this._callbacks.length;e++)this._callbacks[e]();this._callbacks=[]},_catchFirstRender:function(){requestAnimationFrame(function(){Polymer.RenderStatus._makeReady()})},_afterNextRenderQueue:[],_waitingNextRender:!1,afterNextRender:function(e,t,r){this._watchNextRender(),this._afterNextRenderQueue.push([e,t,r])},hasRendered:function(){return this._ready},_watchNextRender:function(){if(!this._waitingNextRender){this._waitingNextRender=!0;var e=function(){Polymer.RenderStatus._flushNextRender()};this._ready?requestAnimationFrame(e):this.whenReady(e)}},_flushNextRender:function(){var e=this;setTimeout(function(){e._flushRenderCallbacks(e._afterNextRenderQueue),e._afterNextRenderQueue=[],e._waitingNextRender=!1})},_flushRenderCallbacks:function(e){for(var t,r=0;r<e.length;r++)t=e[r],t[1].apply(t[0],t[2]||Polymer.nar)}},window.HTMLImports?HTMLImports.whenReady(function(){Polymer.RenderStatus._catchFirstRender()}):Polymer.RenderStatus._catchFirstRender(),Polymer.ImportStatus=Polymer.RenderStatus,Polymer.ImportStatus.whenLoaded=Polymer.ImportStatus.whenReady,function(){"use strict";var e=Polymer.Settings;Polymer.Base={__isPolymerInstance__:!0,_addFeature:function(e){this.mixin(this,e)},registerCallback:function(){if("max"===e.lazyRegister)this.beforeRegister&&this.beforeRegister();else{this._desugarBehaviors();for(var t,r=0;r<this.behaviors.length;r++)t=this.behaviors[r],t.beforeRegister&&t.beforeRegister.call(this);this.beforeRegister&&this.beforeRegister()}this._registerFeatures(),e.lazyRegister||this.ensureRegisterFinished()},createdCallback:function(){if(e.disableUpgradeEnabled){if(this.hasAttribute("disable-upgrade"))return this._propertySetter=t,this._configValue=null,void(this.__data__={});this.__hasInitialized=!0}this.__initialize()},__initialize:function(){this.__hasRegisterFinished||this._ensureRegisterFinished(this.__proto__),Polymer.telemetry.instanceCount++,this.root=this;for(var e,t=0;t<this.behaviors.length;t++)e=this.behaviors[t],e.created&&e.created.call(this);this.created&&this.created(),this._initFeatures()},ensureRegisterFinished:function(){this._ensureRegisterFinished(this)},_ensureRegisterFinished:function(t){if(t.__hasRegisterFinished!==t.is||!t.is){if("max"===e.lazyRegister){t._desugarBehaviors();for(var r,i=0;i<t.behaviors.length;i++)r=t.behaviors[i],r.beforeRegister&&r.beforeRegister.call(t)}t.__hasRegisterFinished=t.is,t._finishRegisterFeatures&&t._finishRegisterFeatures();for(var o,s=0;s<t.behaviors.length;s++)o=t.behaviors[s],o.registered&&o.registered.call(t);t.registered&&t.registered(),e.usePolyfillProto&&t!==this&&t.extend(this,t)}},attachedCallback:function(){var e=this;Polymer.RenderStatus.whenReady(function(){e.isAttached=!0;for(var t,r=0;r<e.behaviors.length;r++)t=e.behaviors[r],t.attached&&t.attached.call(e);e.attached&&e.attached()})},detachedCallback:function(){var e=this;Polymer.RenderStatus.whenReady(function(){e.isAttached=!1;for(var t,r=0;r<e.behaviors.length;r++)t=e.behaviors[r],t.detached&&t.detached.call(e);e.detached&&e.detached()})},attributeChangedCallback:function(e,t,r){this._attributeChangedImpl(e);for(var i,o=0;o<this.behaviors.length;o++)i=this.behaviors[o],i.attributeChanged&&i.attributeChanged.call(this,e,t,r);this.attributeChanged&&this.attributeChanged(e,t,r)},_attributeChangedImpl:function(e){this._setAttributeToProperty(this,e)},extend:function(e,t){if(e&&t)for(var r,i=Object.getOwnPropertyNames(t),o=0;o<i.length&&(r=i[o]);o++)this.copyOwnProperty(r,t,e);return e||t},mixin:function(e,t){for(var r in t)e[r]=t[r];return e},copyOwnProperty:function(e,t,r){var i=Object.getOwnPropertyDescriptor(t,e);i&&Object.defineProperty(r,e,i)},_logger:function(e,t){switch(1===t.length&&Array.isArray(t[0])&&(t=t[0]),e){case"log":case"warn":case"error":console[e].apply(console,t)}},_log:function(){var e=Array.prototype.slice.call(arguments,0);this._logger("log",e)},_warn:function(){var e=Array.prototype.slice.call(arguments,0);this._logger("warn",e)},_error:function(){var e=Array.prototype.slice.call(arguments,0);this._logger("error",e)},_logf:function(){return this._logPrefix.concat(this.is).concat(Array.prototype.slice.call(arguments,0))}},Polymer.Base._logPrefix=function(){return window.chrome&&!/edge/i.test(navigator.userAgent)||/firefox/i.test(navigator.userAgent)?["%c[%s::%s]:","font-weight: bold; background-color:#EEEE00;"]:["[%s::%s]:"]}(),Polymer.Base.chainObject=function(e,t){return e&&t&&e!==t&&(Object.__proto__||(e=Polymer.Base.extend(Object.create(t),e)),e.__proto__=t),e},Polymer.Base=Polymer.Base.chainObject(Polymer.Base,HTMLElement.prototype),Polymer.BaseDescriptors={};var t;if(e.disableUpgradeEnabled){t=function(e,t){this.__data__[e]=t};var r=Polymer.Base.attributeChangedCallback;Polymer.Base.attributeChangedCallback=function(e,t,i){this.__hasInitialized||"disable-upgrade"!==e||(this.__hasInitialized=!0,this._propertySetter=Polymer.Bind._modelApi._propertySetter,this._configValue=Polymer.Base._configValue,this.__initialize()),r.call(this,e,t,i)}}window.CustomElements?Polymer.instanceof=CustomElements.instanceof:Polymer.instanceof=function(e,t){return e instanceof t},Polymer.isInstance=function(e){return Boolean(e&&e.__isPolymerInstance__)},Polymer.telemetry.instanceCount=0}(),function(){function e(){if(s)for(var e,t=document._currentScript||document.currentScript,r=t&&t.ownerDocument||document,i=r.querySelectorAll("dom-module"),o=i.length-1;o>=0&&(e=i[o]);o--){if(e.__upgraded__)return;CustomElements.upgrade(e)}}var t={},r={},i=function(e){return t[e]||r[e.toLowerCase()]},o=function(){return document.createElement("dom-module")};o.prototype=Object.create(HTMLElement.prototype),Polymer.Base.mixin(o.prototype,{createdCallback:function(){this.register()},register:function(e){(e=e||this.id||this.getAttribute("name")||this.getAttribute("is"))&&(this.id=e,t[e]=this,r[e.toLowerCase()]=this)},import:function(t,r){if(t){var o=i(t);return o||(e(),o=i(t)),o&&r&&(o=o.querySelector(r)),o}}}),Object.defineProperty(o.prototype,"constructor",{value:o,configurable:!0,writable:!0});var s=window.CustomElements&&!CustomElements.useNative;document.registerElement("dom-module",o)}(),Polymer.Base._addFeature({_prepIs:function(){if(!this.is){var e=(document._currentScript||document.currentScript).parentNode;if("dom-module"===e.localName){var t=e.id||e.getAttribute("name")||e.getAttribute("is");this.is=t}}this.is&&(this.is=this.is.toLowerCase())}}),Polymer.Base._addFeature({behaviors:[],_desugarBehaviors:function(){this.behaviors.length&&(this.behaviors=this._desugarSomeBehaviors(this.behaviors))},_desugarSomeBehaviors:function(e){var t=[];e=this._flattenBehaviorsList(e);for(var r=e.length-1;r>=0;r--){var i=e[r];t.indexOf(i)===-1&&(this._mixinBehavior(i),t.unshift(i))}return t},_flattenBehaviorsList:function(e){for(var t=[],r=0;r<e.length;r++){var i=e[r];i instanceof Array?t=t.concat(this._flattenBehaviorsList(i)):i?t.push(i):this._warn(this._logf("_flattenBehaviorsList","behavior is null, check for missing or 404 import"))}return t},_mixinBehavior:function(e){for(var t,r=Object.getOwnPropertyNames(e),i=e._noAccessors,o=0;o<r.length&&(t=r[o]);o++)Polymer.Base._behaviorProperties[t]||this.hasOwnProperty(t)||(i?this[t]=e[t]:this.copyOwnProperty(t,e,this))},_prepBehaviors:function(){this._prepFlattenedBehaviors(this.behaviors)},_prepFlattenedBehaviors:function(e){for(var t=0,r=e.length;t<r;t++)this._prepBehavior(e[t]);this._prepBehavior(this)},_marshalBehaviors:function(){for(var e=0;e<this.behaviors.length;e++)this._marshalBehavior(this.behaviors[e]);this._marshalBehavior(this)}}),Polymer.Base._behaviorProperties={hostAttributes:!0,beforeRegister:!0,registered:!0,properties:!0,observers:!0,listeners:!0,created:!0,attached:!0,detached:!0,attributeChanged:!0,ready:!0,_noAccessors:!0},Polymer.Base._addFeature({_getExtendedPrototype:function(e){return this._getExtendedNativePrototype(e)},_nativePrototypes:{},_getExtendedNativePrototype:function(e){var t=this._nativePrototypes[e];if(!t){t=Object.create(this.getNativePrototype(e));for(var r,i=Object.getOwnPropertyNames(Polymer.Base),o=0;o<i.length&&(r=i[o]);o++)Polymer.BaseDescriptors[r]||(t[r]=Polymer.Base[r]);Object.defineProperties(t,Polymer.BaseDescriptors),this._nativePrototypes[e]=t}return t},getNativePrototype:function(e){return Object.getPrototypeOf(document.createElement(e))}}),Polymer.Base._addFeature({_prepConstructor:function(){this._factoryArgs=this.extends?[this.extends,this.is]:[this.is];var e=function(){return this._factory(arguments)};this.hasOwnProperty("extends")&&(e.extends=this.extends),Object.defineProperty(this,"constructor",{value:e,writable:!0,configurable:!0}),e.prototype=this},_factory:function(e){var t=document.createElement.apply(document,this._factoryArgs);return this.factoryImpl&&this.factoryImpl.apply(t,e),t}}),Polymer.nob=Object.create(null),Polymer.Base._addFeature({getPropertyInfo:function(e){var t=this._getPropertyInfo(e,this.properties);if(!t)for(var r=0;r<this.behaviors.length;r++)if(t=this._getPropertyInfo(e,this.behaviors[r].properties))return t;return t||Polymer.nob},_getPropertyInfo:function(e,t){var r=t&&t[e];return"function"==typeof r&&(r=t[e]={type:r}),r&&(r.defined=!0),r},_prepPropertyInfo:function(){this._propertyInfo={};for(var e=0;e<this.behaviors.length;e++)this._addPropertyInfo(this._propertyInfo,this.behaviors[e].properties);this._addPropertyInfo(this._propertyInfo,this.properties),this._addPropertyInfo(this._propertyInfo,this._propertyEffects)},_addPropertyInfo:function(e,t){if(t){var r,i;for(var o in t)r=e[o],i=t[o],("_"!==o[0]||i.readOnly)&&(e[o]?(r.type||(r.type=i.type),r.readOnly||(r.readOnly=i.readOnly)):e[o]={type:"function"==typeof i?i:i.type,readOnly:i.readOnly,attribute:Polymer.CaseMap.camelToDashCase(o)})}}}),function(){var e={configurable:!0,writable:!0,enumerable:!0,value:{}};Polymer.BaseDescriptors.properties=e,Object.defineProperty(Polymer.Base,"properties",e)}(),Polymer.CaseMap={_caseMap:{},_rx:{dashToCamel:/-[a-z]/g,camelToDash:/([A-Z])/g},dashToCamelCase:function(e){return this._caseMap[e]||(this._caseMap[e]=e.indexOf("-")<0?e:e.replace(this._rx.dashToCamel,function(e){return e[1].toUpperCase()}))},camelToDashCase:function(e){return this._caseMap[e]||(this._caseMap[e]=e.replace(this._rx.camelToDash,"-$1").toLowerCase())}},Polymer.Base._addFeature({_addHostAttributes:function(e){this._aggregatedAttributes||(this._aggregatedAttributes={}),e&&this.mixin(this._aggregatedAttributes,e)},_marshalHostAttributes:function(){this._aggregatedAttributes&&this._applyAttributes(this,this._aggregatedAttributes)},_applyAttributes:function(e,t){for(var r in t)if(!this.hasAttribute(r)&&"class"!==r){var i=t[r];this.serializeValueToAttribute(i,r,this)}},_marshalAttributes:function(){this._takeAttributesToModel(this)},_takeAttributesToModel:function(e){if(this.hasAttributes())for(var t in this._propertyInfo){var r=this._propertyInfo[t];this.hasAttribute(r.attribute)&&this._setAttributeToProperty(e,r.attribute,t,r)}},_setAttributeToProperty:function(e,t,r,i){if(!this._serializing&&(r=r||Polymer.CaseMap.dashToCamelCase(t),(i=i||this._propertyInfo&&this._propertyInfo[r])&&!i.readOnly)){var o=this.getAttribute(t);e[r]=this.deserialize(o,i.type)}},_serializing:!1,reflectPropertyToAttribute:function(e,t,r){this._serializing=!0,r=void 0===r?this[e]:r,this.serializeValueToAttribute(r,t||Polymer.CaseMap.camelToDashCase(e)),this._serializing=!1},serializeValueToAttribute:function(e,t,r){var i=this.serialize(e);r=r||this,void 0===i?r.removeAttribute(t):r.setAttribute(t,i)},deserialize:function(e,t){switch(t){case Number:e=Number(e);break;case Boolean:e=null!=e;break;case Object:try{e=JSON.parse(e)}catch(e){}break;case Array:try{e=JSON.parse(e)}catch(t){e=null,console.warn("Polymer::Attributes: couldn`t decode Array as JSON")}break;case Date:e=new Date(e);break;case String:}return e},serialize:function(e){switch(typeof e){case"boolean":return e?"":void 0;case"object":if(e instanceof Date)return e.toString();if(e)try{return JSON.stringify(e)}catch(e){return""}default:return null!=e?e:void 0}}}),Polymer.version="1.8.1",Polymer.Base._addFeature({_registerFeatures:function(){this._prepIs(),this._prepBehaviors(),this._prepConstructor(),this._prepPropertyInfo()},_prepBehavior:function(e){this._addHostAttributes(e.hostAttributes)},_marshalBehavior:function(e){},_initFeatures:function(){this._marshalHostAttributes(),this._marshalBehaviors()}});</script>
 
 
@@ -1335,6 +1336,175 @@ _styles:[],_properties:null,customStyle:{},_styleCache:new t,_element:Polymer.Do
 
   <script>Polymer({is:"paper-icon-button",hostAttributes:{role:"button",tabindex:"0"},behaviors:[Polymer.PaperInkyFocusBehavior],properties:{src:{type:String},icon:{type:String},alt:{type:String,observer:"_altChanged"}},_altChanged:function(t,e){var r=this.getAttribute("aria-label");r&&e!=r||this.setAttribute("aria-label",t)}});</script>
 </dom-module>
+<script>Polymer.IronRangeBehavior={properties:{value:{type:Number,value:0,notify:!0,reflectToAttribute:!0},min:{type:Number,value:0,notify:!0},max:{type:Number,value:100,notify:!0},step:{type:Number,value:1,notify:!0},ratio:{type:Number,value:0,readOnly:!0,notify:!0}},observers:["_update(value, min, max, step)"],_calcRatio:function(t){return(this._clampValue(t)-this.min)/(this.max-this.min)},_clampValue:function(t){return Math.min(this.max,Math.max(this.min,this._calcStep(t)))},_calcStep:function(t){if(t=parseFloat(t),!this.step)return t;var e=Math.round((t-this.min)/this.step);return this.step<1?e/(1/this.step)+this.min:e*this.step+this.min},_validateValue:function(){var t=this._clampValue(this.value);return this.value=this.oldValue=isNaN(t)?this.oldValue:t,this.value!==t},_update:function(){this._validateValue(),this._setRatio(100*this._calcRatio(this.value))}};</script><dom-module id="paper-progress" assetpath="../bower_components/paper-progress/">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 200px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      :host([hidden]) {
+        display: none !important;
+      }
+
+      #progressContainer {
+        @apply(--paper-progress-container);
+        position: relative;
+      }
+
+      #progressContainer,
+      /* the stripe for the indeterminate animation*/
+      .indeterminate::after {
+        height: var(--paper-progress-height, 4px);
+      }
+
+      #primaryProgress,
+      #secondaryProgress,
+      .indeterminate::after {
+        @apply(--layout-fit);
+      }
+
+      #progressContainer,
+      .indeterminate::after {
+        background: var(--paper-progress-container-color, --google-grey-300);
+      }
+
+      :host(.transiting) #primaryProgress,
+      :host(.transiting) #secondaryProgress {
+        -webkit-transition-property: -webkit-transform;
+        transition-property: transform;
+
+        /* Duration */
+        -webkit-transition-duration: var(--paper-progress-transition-duration, 0.08s);
+        transition-duration: var(--paper-progress-transition-duration, 0.08s);
+
+        /* Timing function */
+        -webkit-transition-timing-function: var(--paper-progress-transition-timing-function, ease);
+        transition-timing-function: var(--paper-progress-transition-timing-function, ease);
+
+        /* Delay */
+        -webkit-transition-delay: var(--paper-progress-transition-delay, 0s);
+        transition-delay: var(--paper-progress-transition-delay, 0s);
+      }
+
+      #primaryProgress,
+      #secondaryProgress {
+        @apply(--layout-fit);
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+        -webkit-transform: scaleX(0);
+        transform: scaleX(0);
+        will-change: transform;
+      }
+
+      #primaryProgress {
+        background: var(--paper-progress-active-color, --google-green-500);
+      }
+
+      #secondaryProgress {
+        background: var(--paper-progress-secondary-color, --google-green-100);
+      }
+
+      :host([disabled]) #primaryProgress {
+        background: var(--paper-progress-disabled-active-color, --google-grey-500);
+      }
+
+      :host([disabled]) #secondaryProgress {
+        background: var(--paper-progress-disabled-secondary-color, --google-grey-300);
+      }
+
+      :host(:not([disabled])) #primaryProgress.indeterminate {
+        -webkit-transform-origin: right center;
+        transform-origin: right center;
+        -webkit-animation: indeterminate-bar var(--paper-progress-indeterminate-cycle-duration, 2s) linear infinite;
+        animation: indeterminate-bar var(--paper-progress-indeterminate-cycle-duration, 2s) linear infinite;
+      }
+
+      :host(:not([disabled])) #primaryProgress.indeterminate::after {
+        content: "";
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+
+        -webkit-animation: indeterminate-splitter var(--paper-progress-indeterminate-cycle-duration, 2s) linear infinite;
+        animation: indeterminate-splitter var(--paper-progress-indeterminate-cycle-duration, 2s) linear infinite;
+      }
+
+      @-webkit-keyframes indeterminate-bar {
+        0% {
+          -webkit-transform: scaleX(1) translateX(-100%);
+        }
+        50% {
+          -webkit-transform: scaleX(1) translateX(0%);
+        }
+        75% {
+          -webkit-transform: scaleX(1) translateX(0%);
+          -webkit-animation-timing-function: cubic-bezier(.28,.62,.37,.91);
+        }
+        100% {
+          -webkit-transform: scaleX(0) translateX(0%);
+        }
+      }
+
+      @-webkit-keyframes indeterminate-splitter {
+        0% {
+          -webkit-transform: scaleX(.75) translateX(-125%);
+        }
+        30% {
+          -webkit-transform: scaleX(.75) translateX(-125%);
+          -webkit-animation-timing-function: cubic-bezier(.42,0,.6,.8);
+        }
+        90% {
+          -webkit-transform: scaleX(.75) translateX(125%);
+        }
+        100% {
+          -webkit-transform: scaleX(.75) translateX(125%);
+        }
+      }
+
+      @keyframes indeterminate-bar {
+        0% {
+          transform: scaleX(1) translateX(-100%);
+        }
+        50% {
+          transform: scaleX(1) translateX(0%);
+        }
+        75% {
+          transform: scaleX(1) translateX(0%);
+          animation-timing-function: cubic-bezier(.28,.62,.37,.91);
+        }
+        100% {
+          transform: scaleX(0) translateX(0%);
+        }
+      }
+
+      @keyframes indeterminate-splitter {
+        0% {
+          transform: scaleX(.75) translateX(-125%);
+        }
+        30% {
+          transform: scaleX(.75) translateX(-125%);
+          animation-timing-function: cubic-bezier(.42,0,.6,.8);
+        }
+        90% {
+          transform: scaleX(.75) translateX(125%);
+        }
+        100% {
+          transform: scaleX(.75) translateX(125%);
+        }
+      }
+    </style>
+
+    <div id="progressContainer">
+      <div id="secondaryProgress" hidden$="[[_hideSecondaryProgress(secondaryRatio)]]"></div>
+      <div id="primaryProgress"></div>
+    </div>
+  </template>
+</dom-module>
+
+<script>Polymer({is:"paper-progress",behaviors:[Polymer.IronRangeBehavior],properties:{secondaryProgress:{type:Number,value:0},secondaryRatio:{type:Number,value:0,readOnly:!0},indeterminate:{type:Boolean,value:!1,observer:"_toggleIndeterminate"},disabled:{type:Boolean,value:!1,reflectToAttribute:!0,observer:"_disabledChanged"}},observers:["_progressChanged(secondaryProgress, value, min, max)"],hostAttributes:{role:"progressbar"},_toggleIndeterminate:function(e){this.toggleClass("indeterminate",e,this.$.primaryProgress)},_transformProgress:function(e,r){var s="scaleX("+r/100+")";e.style.transform=e.style.webkitTransform=s},_mainRatioChanged:function(e){this._transformProgress(this.$.primaryProgress,e)},_progressChanged:function(e,r,s,t){e=this._clampValue(e),r=this._clampValue(r);var a=100*this._calcRatio(e),i=100*this._calcRatio(r);this._setSecondaryRatio(a),this._transformProgress(this.$.secondaryProgress,a),this._transformProgress(this.$.primaryProgress,i),this.secondaryProgress=e,this.setAttribute("aria-valuenow",r),this.setAttribute("aria-valuemin",s),this.setAttribute("aria-valuemax",t)},_disabledChanged:function(e){this.setAttribute("aria-disabled",e?"true":"false")},_hideSecondaryProgress:function(e){return 0===e}});</script>
 <script>Polymer({is:"iron-iconset-svg",properties:{name:{type:String,observer:"_nameChanged"},size:{type:Number,value:24},rtlMirroring:{type:Boolean,value:!1}},_targetIsRTL:function(e){return e&&e.nodeType!==Node.ELEMENT_NODE&&(e=e.host),e&&"rtl"===window.getComputedStyle(e).direction},attached:function(){this.style.display="none"},getIconNames:function(){return this._icons=this._createIconMap(),Object.keys(this._icons).map(function(e){return this.name+":"+e},this)},applyIcon:function(e,t){e=e.root||e,this.removeIcon(e);var n=this._cloneIcon(t,this.rtlMirroring&&this._targetIsRTL(e));if(n){var o=Polymer.dom(e);return o.insertBefore(n,o.childNodes[0]),e._svgIcon=n}return null},removeIcon:function(e){e=e.root||e,e._svgIcon&&(Polymer.dom(e).removeChild(e._svgIcon),e._svgIcon=null)},_nameChanged:function(){new Polymer.IronMeta({type:"iconset",key:this.name,value:this}),this.async(function(){this.fire("iron-iconset-added",this,{node:window})})},_createIconMap:function(){var e=Object.create(null);return Polymer.dom(this).querySelectorAll("[id]").forEach(function(t){e[t.id]=t}),e},_cloneIcon:function(e,t){return this._icons=this._icons||this._createIconMap(),this._prepareSvgClone(this._icons[e],this.size,t)},_prepareSvgClone:function(e,t,n){if(e){var o=e.cloneNode(!0),r=document.createElementNS("http://www.w3.org/2000/svg","svg"),i=o.getAttribute("viewBox")||"0 0 "+t+" "+t,s="pointer-events: none; display: block; width: 100%; height: 100%;";return n&&o.hasAttribute("mirror-in-rtl")&&(s+="-webkit-transform:scale(-1,1);transform:scale(-1,1);"),r.setAttribute("viewBox",i),r.setAttribute("preserveAspectRatio","xMidYMid meet"),r.style.cssText=s,r.appendChild(o).removeAttribute("id"),r}return null}});</script><iron-iconset-svg name="my-icons" size="24">
   <svg>
     <defs>
@@ -1391,12 +1561,13 @@ _styles:[],_properties:null,customStyle:{},_styleCache:new t,_element:Polymer.Do
     <app-location route="{{route}}"></app-location>
 
     <iron-ajax auto="" url="https://witt-meal-track.herokuapp.com/foodlist" handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+    <iron-ajax id="saveProgressCall" url="https://witt-meal-track.herokuapp.com/save" handle-as="json" on-response="saveFinished" debounce-duration="300"></iron-ajax>
     <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <app-drawer-layout fullbleed="">
       
       <app-drawer id="drawer">
-        <app-toolbar>Menu</app-toolbar>
+        <app-toolbar sticky="">Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="view1" href="/view1">Foods</a>
           <a name="view2" href="/view2">History</a>
@@ -1412,6 +1583,7 @@ _styles:[],_properties:null,customStyle:{},_styleCache:new t,_element:Polymer.Do
             <div main-title="">Food Tracker</div>
             <span style="flex: 1"></span>
             <paper-icon-button icon="icons:save" on-tap="saveProgress">SAVE</paper-icon-button>
+            <paper-progress value="10" indeterminate="" bottom-item=""></paper-progress>
           </app-toolbar>
         </app-header>
 
@@ -1425,6 +1597,6 @@ _styles:[],_properties:null,customStyle:{},_styleCache:new t,_element:Polymer.Do
     <my-view3 name="meta" id="meta"></my-view3>
   </template>
 
-  <script>Polymer({is:"my-app",properties:{page:{type:String,reflectToAttribute:!0,observer:"_pageChanged"},foods:{type:Object}},observers:["_routePageChanged(routeData.page)","_foodsChanged(foods.*)"],ready:function(){},_foodsChanged:function(e){if(e.path.indexOf("total")==-1){var t,o=(this.$$("my-view1"),e.path.indexOf(".count")),s=e.path.indexOf(".options");if(s&&s!==-1&&o&&o!==-1){var i=(e.path.substring(0,s),e.path.substring(0,o));t=this.get(i).id;for(var n=0;n<this.foods.length;n++)for(var a=this.foods[n],r=a.options,h=0;h<r.length;h++)r[h].id===t&&this.set("foods.#"+n+".options.#"+h+".count",e.value)}}},handleResponse:function(e){this.foods=e.detail.response},saveProgress:function(e){},_routePageChanged:function(e){this.page=e||"view1",this.$.drawer.persistent||this.$.drawer.close()},_pageChanged:function(e){var t=this.resolveUrl("my-"+e+".html");this.importHref(t,null,this._showPage404,!0)},_showPage404:function(){this.page="view404"}});</script>
+  <script>Polymer({is:"my-app",properties:{page:{type:String,reflectToAttribute:!0,observer:"_pageChanged"},foods:{type:Object}},observers:["_routePageChanged(routeData.page)","_foodsChanged(foods.*)"],ready:function(){this.foods=[{display:"Protein",id:1,expected:3,total:0,options:[{text:"3 8oz glasses of milk",id:1,count:0},{text:"2c yogurt",id:2,count:0},{text:"3oz cheese (3/4c grated)",id:3,count:0},{text:"4 eggs",id:4,count:0},{text:"3½oz canned tuna",id:5,count:0},{text:"4oz (when raw) fish",id:6,count:0},{text:"¾c cooked beans",id:7,count:0},{text:"½ c edamame",id:8,count:0},{text:"¾c green peas",id:9,count:0},{text:"1½oz peanuts",id:10,count:0},{text:"3T peanut butter",id:11,count:0},{text:"¾c oat bran",id:12,count:0},{text:"½c quinoa",id:13,count:0},{text:"2c whole-grain cereal",id:14,count:0},{text:"1oz (uncooked) high-protein pasta",id:15,count:0},{text:"3oz (uncooked) whole-wheat pasta",id:16,count:0},{text:"1½c cooked couscous/bulgur/buckwheat",id:17,count:0},{text:"4 slices whole-grain bread",id:18,count:0},{text:"4oz (when raw) beef/pork/chicken/turkey",id:19,count:0},{text:"2 whole-wheat pitas/English muffins",id:20,count:0}]},{display:"Calcium",id:2,expected:4,total:0,options:[{text:"¼c grated cheese",id:21,count:0},{text:"1oz hard cheese",id:22,count:0},{text:"½c ricotta",id:23,count:0},{text:"1c milk",id:24,count:0},{text:"1c yogurt",id:25,count:0},{text:"1½c frozen yogurt",id:26,count:0},{text:"1c calcium-fortified juice",id:27,count:0},{text:"3T grnd sesame seeds",id:28,count:0},{text:"1c cooked greens",id:29,count:0},{text:"1½c cooked bok choy",id:30,count:0},{text:"1½c cooked edamame",id:31,count:0}]},{display:"Vitamin C",id:3,expected:3,total:0,options:[{text:"2c romaine lettuce",id:32,count:0},{text:"¾c shredded raw red cabbage",id:33,count:0},{text:"1c edamame",id:34,count:0},{text:"¼c lemon juice",id:35,count:0},{text:"½c cubed cantaloupe/honeydew/pineapple",id:36,count:0},{text:"⅓ c strawberries",id:37,count:0},{text:"½ med. grapefruit/orange/mango/papaya",id:38,count:0},{text:"½c grapefruit/orange juice",id:39,count:0},{text:"⅔ c blackberries/raspberries",id:40,count:0},{text:"2c watermelon",id:41,count:0},{text:"1 med. tomato",id:42,count:0},{text:"½c cooked kale/spinach",id:43,count:0},{text:"1c packed raw spinach",id:44,count:0},{text:"¾c cooked greens",id:45,count:0},{text:"½c broccoli/cauliflower",id:46,count:0},{text:"¼ med. red/orange/yellow bell pepper",id:47,count:0},{text:"1 potato/sweet potato with skin",id:48,count:0}]},{display:"Other Fruits & Vegetables",id:5,expected:2,total:0,options:[{text:"1 med. apple/white peach/pear/banana",id:70,count:0},{text:"½c apple/pomegranate/pineapple juice",id:71,count:0},{text:"½c applesauce",id:72,count:0},{text:"½c fresh cherries",id:73,count:0},{text:"2 sm. plums",id:74,count:0},{text:"¼c cooked cranberries",id:75,count:0},{text:"½c blueberries",id:76,count:0},{text:"½ med. avocado",id:77,count:0},{text:"½c cooked green beans",id:78,count:0},{text:"½c sliced onion",id:79,count:0},{text:"1 sm. ear of corn",id:80,count:0},{text:"1c iceberg lettuce",id:81,count:0},{text:"½c green peas/snow peas",id:82,count:0}]},{display:"Whole Grains & Legumes",id:6,expected:6,total:0,options:[{text:"1 slice whole-wheat/whole-rye/whole-grain bread",id:83,count:0},{text:"1c oatmeal",id:84,count:0},{text:"1c whole-grain cereal",id:85,count:0},{text:"½ whole-wheat pita/roll/bagel/12in wrap/tortilla/english muffin",id:86,count:0},{text:"½c granola",id:87,count:0},{text:"½c cooked brown/wild rice/bulgur/couscous/barley/quinoa",id:88,count:0},{text:"2c popcorn",id:89,count:0},{text:"1oz (uncooked) whole-grain pasta",id:90,count:0},{text:"½c cooked beans/lentils/edamame",id:91,count:0},{text:"1oz whole-grain crackers",id:92,count:0},{text:"¼c whole-grain flour",id:93,count:0}]},{display:"Fats",id:7,expected:4,total:0,options:[{text:"1T oil/butter",id:94,count:0},{text:"1T mayonnaise",id:95,count:0},{text:"2T salad dressing",id:96,count:0},{text:"2T heavy cream",id:97,count:0},{text:"¼c half&half",id:98,count:0},{text:"¼c sour cream",id:99,count:0},{text:"2T cream cheese",id:100,count:0},{text:"2T peanut/almond butter",id:101,count:0}]},{display:"Vitamins",id:8,expected:1,total:0,options:[{text:"Prenatal Vitamin",id:103,count:0}]},{display:"Fluids",id:9,expected:8,total:0,options:[{text:"1 glass water",id:102,count:0}]},{display:"Green Leafy & Yellow Veggies & Fruits",id:4,expected:4,total:0,options:[{text:"½c cubed cantaloupe",id:49,count:0},{text:"2 lg. fresh apricots",id:50,count:0},{text:"6 dried apricot halves",id:51,count:0},{text:"½ med. mango/papaya",id:52,count:0},{text:"1 lg. nectarine / peach",id:53,count:0},{text:"1 sm. persimmon",id:54,count:0},{text:"¾c pink grapefruit juice",id:55,count:0},{text:"1 clementine",id:56,count:0},{text:"1 pink/ruby red grapefruit",id:57,count:0},{text:"½ carrot",id:58,count:0},{text:"¼c grated carrot",id:59,count:0},{text:"½ sm. sweet potato",id:60,count:0},{text:"2 med. tomatoes",id:61,count:0},{text:"½ med. red bell pepper",id:62,count:0},{text:"¼c chopped parsley",id:63,count:0},{text:"½c broccoli",id:64,count:0},{text:"1c coleslaw mix",id:65,count:0},{text:"¼c cooked greens",id:66,count:0},{text:"½c cooked spinach",id:67,count:0},{text:"1c packed lettuce / spinach",id:68,count:0},{text:"¼c cooked winter squash",id:69,count:0}]}]},_foodsChanged:function(t){if(t.path.indexOf("total")==-1){var e,o=(this.$$("my-view1"),t.path.indexOf(".count")),c=t.path.indexOf(".options");if(c&&c!==-1&&o&&o!==-1){var i=(t.path.substring(0,c),t.path.substring(0,o));e=this.get(i).id;for(var n=0;n<this.foods.length;n++)for(var d=this.foods[n],a=d.options,u=0;u<a.length;u++)a[u].id===e&&this.set("foods.#"+n+".options.#"+u+".count",t.value)}}},handleResponse:function(t){this.foods=t.detail.response},saveProgress:function(t){this.$.saveProgressCall.send({body:{updated:Date.now(),userId:1,foods:this.foods}})},_routePageChanged:function(t){this.page=t||"view1",this.$.drawer.persistent||this.$.drawer.close()},_pageChanged:function(t){var e=this.resolveUrl("my-"+t+".html");this.importHref(e,null,this._showPage404,!0)},_showPage404:function(){this.page="view404"}});</script>
 </dom-module>
 </body></html>
