@@ -1,5 +1,6 @@
 package com.witt.tracker.delegate;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.witt.tracker.entities.Category;
 import com.witt.tracker.entities.Foods;
+import com.witt.tracker.entities.Progress;
 import com.witt.tracker.repositories.CategoriesRepository;
 import com.witt.tracker.repositories.FoodsRepository;
+import com.witt.tracker.repositories.ProgressRepository;
 import com.witt.tracker.response.Option;
 import com.witt.tracker.response.ReturnCategory;
 
@@ -22,11 +25,17 @@ public class FoodsDelegate {
 	@Autowired
 	FoodsRepository foodsRepo;
 	
+	@Autowired
+	ProgressRepository progressRepo;
 	
-	public ReturnCategory[] getAll() {
+	
+	public ReturnCategory[] getAll(Date date) {
     	Iterable<Category> categories = categoriesRepo.findAll();
 		List<ReturnCategory> returnCategories = new ArrayList<ReturnCategory>();
     	Iterable<Foods> foods = foodsRepo.findAll();
+    	if (null != date) {
+    		Iterable<Progress> progress = progressRepo.getMatchingDate(date);
+    	}
     	
     	for (Category category : categories) {
     		ReturnCategory returnCategory = new ReturnCategory();
