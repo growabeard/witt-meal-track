@@ -15,7 +15,7 @@ public interface ProgressRepository extends CrudRepository<Progress, Integer> {
 	
 	Progress save(Progress entity);
 
-	@Query("select * from public.progress p where p.updated = date")
+	@Query("select * from public.progress p where p.updated = :date")
 	Iterable<Progress> getMatchingDate(@Param("date") String date);
 	
 }
