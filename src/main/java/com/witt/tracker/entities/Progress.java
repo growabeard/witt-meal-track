@@ -16,14 +16,14 @@ public class Progress implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
-	@Column (name = "CATEGORY")
-	private int category;
+	@Column (name = "foodid")
+	private int foodid;
 
 	@Column (name = "ACTUAL")
 	private int actual;
 
 	@Column (name = "UPDATED")
-	private Date updated;
+	private String updated;
 
 	@Column (name = "USERID")
 	private int userid;
@@ -36,12 +36,12 @@ public class Progress implements Serializable {
 		this.id = id;
 	}
 
-	public int getCategory() {
-		return category;
+	public int getFoodid() {
+		return foodid;
 	}
 
-	public void setCategory(int category) {
-		this.category = category;
+	public void setFoodid(int foodid) {
+		this.foodid = foodid;
 	}
 
 	public int getActual() {
@@ -52,11 +52,11 @@ public class Progress implements Serializable {
 		this.actual = actual;
 	}
 
-	public Date getUpdated() {
+	public String getUpdated() {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(String updated) {
 		this.updated = updated;
 	}
 

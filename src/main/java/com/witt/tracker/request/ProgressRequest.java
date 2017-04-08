@@ -6,7 +6,7 @@ import com.witt.tracker.response.ReturnCategory;
 
 public class ProgressRequest {
 	private ReturnCategory[] foods;
-	private Date updated;
+	private String updated;
 	
 	private Integer userId;
 
@@ -18,11 +18,11 @@ public class ProgressRequest {
 		this.foods = foods;
 	}
 
-	public Date getUpdated() {
+	public String getUpdated() {
 		return updated;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(String updated) {
 		this.updated = updated;
 	}
 

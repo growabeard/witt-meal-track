@@ -29,10 +29,10 @@ public class ProgressDelegate {
 	}
 
 	private Progress createNewProgress(Option option, ReturnCategory category, 
-			Integer userId, Date updated) {
+			Integer userId, String updated) {
 		Progress prog = new Progress();
 		prog.setActual(option.getCount());
-		prog.setCategory(category.getId());
+		prog.setFoodid(category.getId());
 		prog.setId(option.getId());
 		prog.setUserid(userId);
 		prog.setUpdated(updated);

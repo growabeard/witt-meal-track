@@ -29,13 +29,11 @@ public class FoodsDelegate {
 	ProgressRepository progressRepo;
 	
 	
-	public ReturnCategory[] getAll(Date date) {
+	public ReturnCategory[] getAll(String date) {
     	Iterable<Category> categories = categoriesRepo.findAll();
 		List<ReturnCategory> returnCategories = new ArrayList<ReturnCategory>();
     	Iterable<Foods> foods = foodsRepo.findAll();
-    	if (null != date) {
-    		Iterable<Progress> progress = progressRepo.getMatchingDate(date);
-    	}
+   		Iterable<Progress> progress = progressRepo.getMatchingDate(date);
     	
     	for (Category category : categories) {
     		ReturnCategory returnCategory = new ReturnCategory();
@@ -43,8 +41,7 @@ public class FoodsDelegate {
     		returnCategory.setExpected(category.getExpected());
     		returnCategory.setId(category.getId());
     		returnCategory.setTotal(0);
-//    		returnCategory.setOptions(new Option[]{new Option()});
-    		returnCategory.setOptions(getOptions(category.getId(), foods));
+    		returnCategory.setOptions(getOptions(category.getId(), foods, progress));
     		returnCategories.add(returnCategory);
     	}
     	
@@ -52,22 +49,34 @@ public class FoodsDelegate {
 	}
 
 
-	private Option[] getOptions(Integer categoryId, Iterable<Foods> foods) {
+	private Option[] getOptions(Integer categoryId, Iterable<Foods> foods, 
+			Iterable<Progress> progress) {
 		List<Option> options = new ArrayList<Option>();
 		
 		for (Foods food : foods) {
 			for (Integer catId : food.getCategories()) {
 				if (catId.compareTo(categoryId) == 0) {
-					Option option = new Option();
-					option.setCount(0);
-					option.setId(food.getId());
-					option.setText(food.getText());
+					Option option = createOption(food, progress);
 					options.add(option);
 				}
 			}
 		}
 		
 		return options.toArray(new Option[options.size()]);
+	}
+
+
+	private Option createOption(Foods food, Iterable<Progress> progress) {
+		Option option = new Option();
+		option.setCount(0);
+		for (Progress prog : progress) {
+			if (prog.getFoodid() == food.getId()) {
+				option.setCount(prog.getActual());
+			}
+		}
+		option.setId(food.getId());
+		option.setText(food.getText());
+		return option;
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.witt.tracker.repositories;
 
-import java.sql.Date;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,6 +15,6 @@ public interface ProgressRepository extends CrudRepository<Progress, Integer> {
 	Progress save(Progress entity);
 
 	@Query("select * from public.progress where updated = ?1")
-	Iterable<Progress> getMatchingDate(Date date);
+	Iterable<Progress> getMatchingDate(String date);
 	
 }

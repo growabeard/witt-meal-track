@@ -31,7 +31,7 @@ public class MealTrackerApplication {
 	
 	@RequestMapping("/foodlist")
     @ResponseBody
-    ResponseEntity<ReturnCategory[]> foodListEnpoint(@RequestParam(value="date") Date date) {
+    ResponseEntity<ReturnCategory[]> foodListEnpoint(@RequestParam(value="date") String date) {
     	ReturnCategory[] returnFoods = foodsDelegate.getAll(date);
     	return new ResponseEntity<ReturnCategory[]>(returnFoods, HttpStatus.OK);
     }
