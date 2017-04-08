@@ -15,6 +15,6 @@ public interface ProgressRepository extends CrudRepository<Progress, Integer> {
 	
 	Progress save(Progress entity);
 
-	Iterable<Progress> findByDate(String date);
+	Iterable<Progress> findByUpdated(String updated);
 	
 }
