@@ -30,6 +30,7 @@ public class MealTrackerApplication {
 	@RequestMapping("/foodlist")
     @ResponseBody
     ResponseEntity<ReturnCategory[]> foodListEnpoint(@RequestParam(value="date") String date) {
+   		System.out.println("Looking up foods for " + date);
     	ReturnCategory[] returnFoods = foodsDelegate.getAll(date);
     	return new ResponseEntity<ReturnCategory[]>(returnFoods, HttpStatus.OK);
     }
@@ -37,6 +38,7 @@ public class MealTrackerApplication {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     ResponseEntity saveEndpoint(@RequestBody ProgressRequest request) {
+    	System.out.println("Saving.. " + request.toString());
     	progressDelegate.save(request);
     	return new ResponseEntity<>(HttpStatus.OK);
     }

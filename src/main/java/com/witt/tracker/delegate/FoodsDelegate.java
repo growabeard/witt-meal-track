@@ -33,6 +33,7 @@ public class FoodsDelegate {
 		List<ReturnCategory> returnCategories = new ArrayList<ReturnCategory>();
     	Iterable<Foods> foods = foodsRepo.findAll();
    		Iterable<Progress> progress = progressRepo.findByUpdated(date);
+   		System.out.println("Progress found for " + date + " " + progress.toString());
     	
     	for (Category category : categories) {
     		ReturnCategory returnCategory = new ReturnCategory();
