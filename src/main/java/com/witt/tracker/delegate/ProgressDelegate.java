@@ -36,7 +36,7 @@ public class ProgressDelegate {
 		prog.setId(option.getId());
 		prog.setUserid(userId);
 		prog.setUpdated(updated);
-		return null;
+		return prog;
 	}
 
 }
