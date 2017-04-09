@@ -1,7 +1,5 @@
 package com.witt.tracker.delegate;
 
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +31,7 @@ public class ProgressDelegate {
 		Progress prog = new Progress();
 		prog.setActual(option.getCount());
 		prog.setFoodid(category.getId());
-		prog.setId(option.getId());
+		prog.setId(option.getId() + updated);
 		prog.setUserid(userId);
 		prog.setUpdated(updated);
 		return prog;

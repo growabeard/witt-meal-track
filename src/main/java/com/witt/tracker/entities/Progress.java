@@ -1,10 +1,9 @@
 package com.witt.tracker.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity (name = "PROGRESS")
@@ -13,8 +12,7 @@ public class Progress implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	private Integer id;
+	private String id;
 
 	@Column (name = "foodid")
 	private int foodid;
@@ -28,11 +26,11 @@ public class Progress implements Serializable {
 	@Column (name = "USERID")
 	private int userid;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
