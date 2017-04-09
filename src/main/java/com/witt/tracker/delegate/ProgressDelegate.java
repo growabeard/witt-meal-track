@@ -19,18 +19,18 @@ public class ProgressDelegate {
 		for(ReturnCategory category : request.getFoods()) {
 			for(Option option : category.getOptions()) {
 				if (option.getCount() > 0) {
-					progressRepo.save(createNewProgress(option, category,
+					progressRepo.save(createNewProgress(option,
 							request.getUserId(), request.getUpdated()));
 				}
 			}
 		}
 	}
 
-	private Progress createNewProgress(Option option, ReturnCategory category, 
+	private Progress createNewProgress(Option option, 
 			Integer userId, String updated) {
 		Progress prog = new Progress();
 		prog.setActual(option.getCount());
-		prog.setFoodid(category.getId());
+		prog.setFoodid(option.getId());
 		prog.setId(option.getId() + updated);
 		prog.setUserid(userId);
 		prog.setUpdated(updated);
