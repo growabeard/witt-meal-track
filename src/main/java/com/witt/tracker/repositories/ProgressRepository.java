@@ -7,14 +7,16 @@ import org.springframework.data.repository.query.Param;
 import com.witt.tracker.entities.Progress;
 
 
-public interface ProgressRepository extends CrudRepository<Progress, Integer> {
+public interface ProgressRepository extends CrudRepository<Progress, String> {
 
-	Progress findBy(Integer id);
+	Progress findBy(String id);
 	
 	Iterable<Progress> findAll();
 	
 	Progress save(Progress entity);
 
 	Iterable<Progress> findByUpdated(String updated);
+	
+	void delete(Progress entity);
 	
 }

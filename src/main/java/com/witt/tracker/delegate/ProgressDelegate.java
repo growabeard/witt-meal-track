@@ -21,6 +21,9 @@ public class ProgressDelegate {
 				if (option.getCount() > 0) {
 					progressRepo.save(createNewProgress(option,
 							request.getUserId(), request.getUpdated()));
+				} else {
+					progressRepo.delete(createNewProgress(option, 
+							request.getUserId(), request.getUpdated()));
 				}
 			}
 		}
