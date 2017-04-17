@@ -68,7 +68,7 @@ public class FoodsDelegate {
 
 	private Option createOption(Foods food, Iterable<Progress> progress) {
 		Option option = new Option();
-		option.setCount(0);
+		option.setCount(0.0);
 		for (Progress prog : progress) {
 			if (prog.getFoodid() == food.getId()) {
 				option.setCount(prog.getActual());

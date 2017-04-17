@@ -18,7 +18,7 @@ public class Progress implements Serializable {
 	private int foodid;
 
 	@Column (name = "ACTUAL")
-	private int actual;
+	private Double actual;
 
 	@Column (name = "UPDATED")
 	private String updated;
@@ -42,11 +42,11 @@ public class Progress implements Serializable {
 		this.foodid = foodid;
 	}
 
-	public int getActual() {
+	public Double getActual() {
 		return actual;
 	}
 
-	public void setActual(int actual) {
+	public void setActual(Double actual) {
 		this.actual = actual;
 	}
 

@@ -4,7 +4,7 @@ public class Option {
 
 	private String text;
 	private int id;
-	private int count;
+	private Double count;
 	public String getText() {
 		return text;
 	}
@@ -17,10 +17,10 @@ public class Option {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCount() {
+	public Double getCount() {
 		return count;
 	}
-	public void setCount(int count) {
+	public void setCount(Double count) {
 		this.count = count;
 	}
 }
